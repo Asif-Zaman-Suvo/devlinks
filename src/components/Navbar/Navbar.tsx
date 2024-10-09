@@ -1,5 +1,7 @@
+import Image from "next/image";
 import React from "react";
 import { HiLink, HiUser, HiEye } from "react-icons/hi";
+import devlinksLogo from "../../images/bird_2.jpg";
 
 const Navbar = () => {
   return (
@@ -10,10 +12,11 @@ const Navbar = () => {
             href="/"
             className="flex items-center space-x-3 rtl:space-x-reverse"
           >
-            <img
-              src="https://flowbite.com/docs/images/logo.svg"
-              className="h-8"
-              alt="Flowbite Logo"
+            <Image
+              src={devlinksLogo}
+              width={32}
+              height={32}
+              alt="devlinks Logo"
             />
             <span className="self-center text-2xl font-bold whitespace-nowrap dark:text-black hidden sm:inline">
               devlinks

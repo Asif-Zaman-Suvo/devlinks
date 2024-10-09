@@ -1,6 +1,85 @@
-import React from "react";
+"use client";
 
+import Image from "next/image";
+import React, { useState } from "react";
+import devlinksLogo from "../../images/bird_2.jpg";
+interface LinkData {
+  id: number;
+  platform: string;
+  url: string;
+  error?: string;
+}
 const Links = () => {
+  const [links, setLinks] = useState<LinkData[]>([]);
+  const [formError, setFormError] = useState<string | null>(null);
+
+  const getUrlPattern = (platform: string): RegExp => {
+    switch (platform) {
+      case "github":
+        return /^https:\/\/github\.com\/[a-zA-Z0-9-]+$/;
+      case "linkedin":
+        return /^https:\/\/www\.linkedin\.com\/in\/[a-zA-Z0-9-]+$/;
+      case "youtube":
+        return /^https:\/\/www\.youtube\.com\/(channel|user)\/[a-zA-Z0-9-]+$/;
+      default:
+        return /^https?:\/\/.+$/; // Basic URL pattern for other platforms
+    }
+  };
+  const addNewLink = () => {
+    const newLink: LinkData = {
+      id: links?.length + 1,
+      platform: "",
+      url: "",
+    };
+    setLinks((prevLinks) => [...prevLinks, newLink]);
+  };
+
+  const removeLink = (id: number) => {
+    setLinks((prevLinks) => prevLinks.filter((link) => link?.id !== id));
+  };
+
+  const updateLink = (id: number, field: "platform" | "url", value: string) => {
+    setLinks((prevLinks) =>
+      prevLinks.map((link) =>
+        link?.id === id ? { ...link, [field]: value, error: undefined } : link
+      )
+    );
+  };
+  const validateLinks = (): boolean => {
+    let isValid = true;
+    const updatedLinks = links.map((link) => {
+      if (!link?.url) {
+        isValid = false;
+        return { ...link, error: "Please add a link" };
+      }
+      const urlPattern = getUrlPattern(link?.platform);
+      if (!urlPattern.test(link?.url)) {
+        isValid = false;
+        return { ...link, error: `Please enter a valid ${link?.platform} URL` };
+      }
+
+      return { ...link, error: undefined };
+    });
+
+    setLinks(updatedLinks);
+    return isValid;
+  };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+
+    if (links?.length === 0) {
+      setFormError("Please add at least one link");
+      return;
+    }
+
+    if (validateLinks()) {
+      console.log("Form submitted successfully", links);
+      // Here you would typically send the data to your backend
+    } else {
+      setFormError("Please correct the errors before submitting");
+    }
+  };
   return (
     <div className="bg-[#943434] px-4 sm:px-6 pb-6">
       <div className="bg-[#943434] grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -12,30 +91,96 @@ const Links = () => {
             <div className="h-[46px] w-[3px] absolute -start-[17px] top-[178px] rounded-s-lg"></div>
             <div className="h-[64px] w-[3px] absolute -end-[17px] top-[142px] rounded-e-lg"></div>
             <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px]">
-              <img
-                src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-2-light.png"
-                className="w-[272px] h-[572px]"
-                alt=""
-              />
+              <Image src={devlinksLogo} width={272} height={572} alt="Mockup" />
             </div>
           </div>
         </div>
 
         {/* Content section - full width on smaller screens */}
         <div className="col-span-1 md:col-span-7 bg-white p-6">
-          <h2 className="text-2xl font-bold mb-4">Links Section</h2>
-          <p className="mb-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni
-            consequatur, distinctio minus, ipsum debitis labore odit dolore
-            eligendi sequi sint ut tenetur inventore nulla, adipisci harum
-            similique autem quisquam provident.
+          <h2 className="text-4xl font-bold mb-4">Customize your links</h2>
+          <p className="mb-10 text-gray-400">
+            Add/edit/remove links below and then share your profile with the
+            world
           </p>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni
-            consequatur, distinctio minus, ipsum debitis labore odit dolore
-            eligendi sequi sint ut tenetur inventore nulla, adipisci harum
-            similique autem quisquam provident.
-          </p>
+          <form onSubmit={handleSubmit}>
+            <button
+              type="button"
+              onClick={addNewLink}
+              className="bg-transparent w-full text-[#633BFE] font-semibold py-2 px-4 border border-[#633BFE] rounded-xl mb-4"
+            >
+              + Add New Link
+            </button>
+            {links?.map((link) => (
+              <div key={link?.id} className="bg-[#FAFAFA] mt-10 rounded-lg p-4">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="font-bold text-gray-500">Link #{link?.id}</h3>
+                  <button
+                    type="button"
+                    className="text-gray-500"
+                    onClick={() => removeLink(link?.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
+                <div className="space-y-4">
+                  <div>
+                    <label
+                      htmlFor={`platform-${link?.id}`}
+                      className="block text-sm font-medium text-gray-500"
+                    >
+                      Platform
+                    </label>
+                    <select
+                      id={`platform-${link?.id}`}
+                      value={link?.platform}
+                      onChange={(e) =>
+                        updateLink(link?.id, "platform", e.target.value)
+                      }
+                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                    >
+                      <option value="">Select a platform</option>
+                      <option value="github">GitHub</option>
+                      <option value="linkedin">LinkedIn</option>
+                      <option value="youtube">YouTube</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label
+                      htmlFor={`link-${link?.id}`}
+                      className="block text-sm font-medium text-gray-500"
+                    >
+                      Link
+                    </label>
+                    <input
+                      id={`link-${link?.id}`}
+                      type="url"
+                      value={link?.url}
+                      onChange={(e) =>
+                        updateLink(link?.id, "url", e.target.value)
+                      }
+                      className={`mt-1 block w-full px-3 py-2 bg-white border ${
+                        link?.error ? "border-red-500" : "border-gray-300"
+                      } rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm`}
+                      placeholder="paste a link here"
+                    />
+                    {link?.error && (
+                      <p className="mt-2 text-sm text-red-600">{link?.error}</p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+            {formError && (
+              <p className="mt-4 text-sm text-red-600">{formError}</p>
+            )}
+            <button
+              type="submit"
+              className="mt-6 w-full bg-[#633BFE] text-white font-semibold py-2 px-4 rounded-xl"
+            >
+              Save
+            </button>
+          </form>
         </div>
       </div>
     </div>
