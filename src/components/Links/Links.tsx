@@ -3,14 +3,14 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import devlinksLogo from "../../images/bird_2.jpg";
-interface LinkData {
+interface ILinkData {
   id: number;
   platform: string;
   url: string;
   error?: string;
 }
 const Links = () => {
-  const [links, setLinks] = useState<LinkData[]>([]);
+  const [links, setLinks] = useState<ILinkData[]>([]);
   const [formError, setFormError] = useState<string | null>(null);
 
   const getUrlPattern = (platform: string): RegExp => {
@@ -26,7 +26,7 @@ const Links = () => {
     }
   };
   const addNewLink = () => {
-    const newLink: LinkData = {
+    const newLink: ILinkData = {
       id: links?.length + 1,
       platform: "",
       url: "",
@@ -35,12 +35,12 @@ const Links = () => {
   };
 
   const removeLink = (id: number) => {
-    setLinks((prevLinks) => prevLinks.filter((link) => link?.id !== id));
+    setLinks((prevLinks) => prevLinks?.filter((link) => link?.id !== id));
   };
 
   const updateLink = (id: number, field: "platform" | "url", value: string) => {
     setLinks((prevLinks) =>
-      prevLinks.map((link) =>
+      prevLinks?.map((link) =>
         link?.id === id ? { ...link, [field]: value, error: undefined } : link
       )
     );
