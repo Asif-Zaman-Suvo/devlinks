@@ -33,7 +33,7 @@ const Links = () => {
       case "linkedin":
         return /^https:\/\/www\.linkedin\.com\/in\/[a-zA-Z0-9-]+$/;
       case "youtube":
-        return /^https:\/\/www\.youtube\.com\/(channel|user)\/[a-zA-Z0-9-]+$/;
+        return /^https:\/\/(?:www\.)?youtube\.com\/(?:@?[a-zA-Z0-9-]+|channel\/[a-zA-Z0-9-]+)$/;
       default:
         return /^https?:\/\/.+$/; // Basic URL pattern for other platforms
     }
