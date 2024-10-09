@@ -3,6 +3,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import devlinksLogo from "../../images/bird_2.jpg";
+import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 interface ILinkData {
   id: number;
   platform: string;
@@ -13,6 +14,18 @@ const Links = () => {
   const [links, setLinks] = useState<ILinkData[]>([]);
   const [formError, setFormError] = useState<string | null>(null);
 
+  const getPlatformIcon = (platform: string) => {
+    switch (platform) {
+      case "github":
+        return <FaGithub />;
+      case "linkedin":
+        return <FaLinkedin />;
+      case "youtube":
+        return <FaYoutube />;
+      default:
+        return null;
+    }
+  };
   const getUrlPattern = (platform: string): RegExp => {
     switch (platform) {
       case "github":
@@ -131,19 +144,43 @@ const Links = () => {
                     >
                       Platform
                     </label>
-                    <select
-                      id={`platform-${link?.id}`}
-                      value={link?.platform}
-                      onChange={(e) =>
-                        updateLink(link?.id, "platform", e.target.value)
-                      }
-                      className="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
-                    >
-                      <option value="">Select a platform</option>
-                      <option value="github">GitHub</option>
-                      <option value="linkedin">LinkedIn</option>
-                      <option value="youtube">YouTube</option>
-                    </select>
+                    <div className="relative">
+                      <select
+                        id={`platform-${link?.id}`}
+                        value={link?.platform}
+                        onChange={(e) =>
+                          updateLink(link?.id, "platform", e.target.value)
+                        }
+                        className="mt-1 block w-full pl-10 pr-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
+                      >
+                        <option value="">Select a platform</option>
+                        <option value="github">
+                          {React.createElement(FaGithub, {
+                            className: "inline mr-2",
+                          })}
+                          GitHub
+                        </option>
+                        <option value="linkedin">
+                          {React.createElement(FaLinkedin, {
+                            className: "inline mr-2",
+                          })}
+                          LinkedIn
+                        </option>
+                        <option value="youtube">
+                          {React.createElement(FaYoutube, {
+                            className: "inline mr-2",
+                          })}
+                          YouTube
+                        </option>
+                      </select>
+                      {link?.platform && (
+                        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                          <span className="text-gray-500 text-xl">
+                            {getPlatformIcon(link?.platform)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div>
                     <label
