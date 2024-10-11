@@ -83,8 +83,8 @@ const MobileMockup: React.FC<MobileMockupProps> = () => {
           <div className="p-4 space-y-4">
             {savedLinks?.map((link) => (
               <a
-                key={link.id}
-                href={link.url}
+                key={link?.id}
+                href={link?.url}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`flex items-center justify-between p-3 rounded-lg text-white ${getPlatformColor(
@@ -93,9 +93,9 @@ const MobileMockup: React.FC<MobileMockupProps> = () => {
               >
                 <div className="flex items-center space-x-3">
                   <span className="text-xl">
-                    {getPlatformIcon(link.platform)}
+                    {getPlatformIcon(link?.platform)}
                   </span>
-                  <span className="text-sm font-medium">{link.platform}</span>
+                  <span className="text-sm font-medium">{link?.platform}</span>
                 </div>
                 <FaChevronRight className="text-sm" />
               </a>

@@ -20,7 +20,7 @@ const ProfileDetails = () => {
       reader.onloadend = () => {
         setLocalProfileData((prev) => ({
           ...prev,
-          profileImage: reader.result as string,
+          profileImage: reader?.result as string,
         }));
       };
       reader.readAsDataURL(file);
@@ -36,12 +36,12 @@ const ProfileDetails = () => {
     const newErrors = { firstName: "", lastName: "" };
     let isValid = true;
 
-    if (!localProfileData.firstName.trim()) {
+    if (!localProfileData?.firstName.trim()) {
       newErrors.firstName = "First name is required";
       isValid = false;
     }
 
-    if (!localProfileData.lastName.trim()) {
+    if (!localProfileData?.lastName.trim()) {
       newErrors.lastName = "Last name is required";
       isValid = false;
     }
@@ -52,7 +52,6 @@ const ProfileDetails = () => {
       setProfileData(localProfileData); // Update global state only on successful submission
       console.log("Form submitted:", localProfileData);
       toast.success("আলহামদুলিল্লাহ,প্রোফাইলের বিবরণ সফলভাবে সংরক্ষিত হয়েছে!");
-      // Here you would typically send the data to your backend
     } else {
       toast.error("জমা দেওয়ার আগে ত্রুটি সংশোধন করুন");
     }
@@ -75,7 +74,7 @@ const ProfileDetails = () => {
                 className="relative w-32 h-32 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
                 onClick={triggerFileInput}
               >
-                {localProfileData.profileImage ? (
+                {localProfileData?.profileImage ? (
                   <Image
                     src={localProfileData?.profileImage}
                     alt="Profile"

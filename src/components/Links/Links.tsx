@@ -75,13 +75,13 @@ const Links = () => {
   };
 
   const removeLink = (id: number) => {
-    setLinks((prevLinks) => prevLinks.filter((link) => link.id !== id));
+    setLinks((prevLinks) => prevLinks?.filter((link) => link?.id !== id));
   };
 
   const updateLink = (id: number, field: "platform" | "url", value: string) => {
     setLinks((prevLinks) =>
-      prevLinks.map((link) =>
-        link.id === id ? { ...link, [field]: value, error: undefined } : link
+      prevLinks?.map((link) =>
+        link?.id === id ? { ...link, [field]: value, error: undefined } : link
       )
     );
   };
@@ -107,13 +107,11 @@ const Links = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
-
     if (links.length === 0) {
       setFormError("Please add at least one link");
       toast.error("ভাইজান,দয়া করে একটা লিংক অ্যাড করেন প্লিজ");
       return;
     }
-
     if (validateLinks()) {
       console.log("Form submitted successfully", links);
       setSavedLinks(links);
@@ -131,12 +129,12 @@ const Links = () => {
     if (result.source.droppableId !== "links-list") return;
     const items = Array.from(links);
     const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    items?.splice(result?.destination.index, 0, reorderedItem);
     setLinks(items);
   };
 
   const draggableItems = links.map((link) => ({
-    id: link.id,
+    id: link?.id,
     content: (
       <div className="bg-[#FAFAFA] mt-10 rounded-lg p-4">
         <div className="flex justify-between items-center mb-4">
@@ -144,7 +142,7 @@ const Links = () => {
           <button
             type="button"
             className="text-gray-500"
-            onClick={() => removeLink(link.id)}
+            onClick={() => removeLink(link?.id)}
           >
             Remove
           </button>
@@ -152,17 +150,17 @@ const Links = () => {
         <div className="space-y-4">
           <div>
             <label
-              htmlFor={`platform-${link.id}`}
+              htmlFor={`platform-${link?.id}`}
               className="block text-sm font-medium text-gray-500"
             >
               Platform
             </label>
             <div className="relative">
               <select
-                id={`platform-${link.id}`}
-                value={link.platform}
+                id={`platform-${link?.id}`}
+                value={link?.platform}
                 onChange={(e) =>
-                  updateLink(link.id, "platform", e.target.value)
+                  updateLink(link?.id, "platform", e.target.value)
                 }
                 className="mt-1 block w-full pl-10 pr-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
               >
@@ -171,10 +169,10 @@ const Links = () => {
                 <option value="LinkedIn">LinkedIn</option>
                 <option value="YouTube">YouTube</option>
               </select>
-              {link.platform && (
+              {link?.platform && (
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                   <span className="text-gray-500 text-xl">
-                    {getPlatformIcon(link.platform)}
+                    {getPlatformIcon(link?.platform)}
                   </span>
                 </div>
               )}
@@ -182,23 +180,23 @@ const Links = () => {
           </div>
           <div>
             <label
-              htmlFor={`link-${link.id}`}
+              htmlFor={`link-${link?.id}`}
               className="block text-sm font-medium text-gray-500"
             >
               Link
             </label>
             <input
-              id={`link-${link.id}`}
+              id={`link-${link?.id}`}
               type="url"
-              value={link.url}
-              onChange={(e) => updateLink(link.id, "url", e.target.value)}
+              value={link?.url}
+              onChange={(e) => updateLink(link?.id, "url", e.target.value)}
               className={`mt-1 block w-full px-3 py-2 bg-white border ${
-                link.error ? "border-red-500" : "border-gray-300"
+                link?.error ? "border-red-500" : "border-gray-300"
               } rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm`}
               placeholder="paste a link here"
             />
-            {link.error && (
-              <p className="mt-2 text-sm text-red-600">{link.error}</p>
+            {link?.error && (
+              <p className="mt-2 text-sm text-red-600">{link?.error}</p>
             )}
           </div>
         </div>

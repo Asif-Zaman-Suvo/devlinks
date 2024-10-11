@@ -34,7 +34,7 @@ const DraggableList: React.FC<DraggableListProps> = ({ items, onDragEnd }) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    {item.content}
+                    {item?.content}
                   </div>
                 )}
               </Draggable>
