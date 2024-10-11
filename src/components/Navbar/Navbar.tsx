@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import { HiLink, HiUser, HiEye } from "react-icons/hi";
-import devlinksLogo from "../../images/bird_2.jpg";
+import devlinksLogo from "../../images/dev.png";
 import Link from "next/link";
 import ActiveLink from "./ActiveLink";
 import Logout from "../LogoutForm/LogoutForm";
@@ -11,7 +11,7 @@ import { useSession } from "next-auth/react";
 const Navbar: React.FC = () => {
   const { data: session } = useSession();
   return (
-    <div className="bg-[#943434] p-4 sm:p-6">
+    <div className="bg-[#FAFAFA] p-4 sm:p-6">
       <nav className="bg-white w-full max-w-full overflow-hidden">
         <div className="flex items-center justify-between p-2 sm:p-4">
           <a
@@ -34,7 +34,7 @@ const Navbar: React.FC = () => {
             <ActiveLink
               href="/add-links"
               className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors bg-white text-gray-500 hover:bg-[#EFEDFB]"
-              activeClassName="bg-[#F1ECFB] text-[#633BFE]"
+              activeClassName="bg-[#EFEDFB] text-[#633BFE]"
             >
               <HiLink className="text-lg" />
               <span className="font-medium">Links</span>
@@ -42,7 +42,7 @@ const Navbar: React.FC = () => {
             <ActiveLink
               href="/profile-details"
               className="flex items-center gap-2 px-4 py-2 rounded-md transition-colors bg-white text-gray-500 hover:bg-blue-200"
-              activeClassName="bg-blue-100 text-blue-600"
+              activeClassName="bg-blue-200 text-blue-600"
             >
               <HiUser className="text-lg" />
               <span className="font-medium">Profile Details</span>

@@ -21,10 +21,11 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
   const isActive = pathname === href;
 
   return (
-    <Link href={href} passHref>
-      <span className={`${className} ${isActive ? activeClassName : ""}`}>
-        {children}
-      </span>
+    <Link
+      href={href}
+      className={`${className} ${isActive ? activeClassName : ""}`}
+    >
+      {children}
     </Link>
   );
 };

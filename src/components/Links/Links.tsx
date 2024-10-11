@@ -205,8 +205,8 @@ const Links = () => {
   }));
 
   return (
-    <div className="bg-[#943434] px-4 sm:px-6 pb-6">
-      <div className="bg-[#943434] grid grid-cols-1 md:grid-cols-12 gap-6">
+    <div className="bg-[#FAFAFA] px-4 sm:px-6 pb-6">
+      <div className="bg-[#FAFAFA] grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Mobile mockups */}
         <MobileMockup profileData={profileData} savedLinks={savedLinks} />
         {/* Content section */}
