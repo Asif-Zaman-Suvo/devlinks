@@ -4,17 +4,21 @@ import MobileMockup from "@/components/MobileMockup/MobileMockup";
 import Image from "next/image";
 import { HiOutlineCamera } from "react-icons/hi";
 import { useAppContext } from "../AppContext/AppContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ProfileDetails = () => {
   const { savedLinks, profileData, setProfileData } = useAppContext();
+  const [localProfileData, setLocalProfileData] = useState(profileData);
   const [errors, setErrors] = useState({ firstName: "", lastName: "" });
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setProfileData((prev) => ({
+        setLocalProfileData((prev) => ({
           ...prev,
           profileImage: reader.result as string,
         }));
@@ -32,12 +36,12 @@ const ProfileDetails = () => {
     const newErrors = { firstName: "", lastName: "" };
     let isValid = true;
 
-    if (!profileData.firstName.trim()) {
+    if (!localProfileData.firstName.trim()) {
       newErrors.firstName = "First name is required";
       isValid = false;
     }
 
-    if (!profileData.lastName.trim()) {
+    if (!localProfileData.lastName.trim()) {
       newErrors.lastName = "Last name is required";
       isValid = false;
     }
@@ -45,11 +49,14 @@ const ProfileDetails = () => {
     setErrors(newErrors);
 
     if (isValid) {
-      console.log("Form submitted:", profileData);
+      setProfileData(localProfileData); // Update global state only on successful submission
+      console.log("Form submitted:", localProfileData);
+      toast.success("আলহামদুলিল্লাহ,প্রোফাইলের বিবরণ সফলভাবে সংরক্ষিত হয়েছে!");
       // Here you would typically send the data to your backend
+    } else {
+      toast.error("জমা দেওয়ার আগে ত্রুটি সংশোধন করুন");
     }
   };
-
   return (
     <div className="bg-[#943434] px-4 sm:px-6 pb-6">
       <div className="bg-[#943434] grid grid-cols-1 md:grid-cols-12 gap-6">
@@ -68,9 +75,9 @@ const ProfileDetails = () => {
                 className="relative w-32 h-32 rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center cursor-pointer"
                 onClick={triggerFileInput}
               >
-                {profileData.profileImage ? (
+                {localProfileData.profileImage ? (
                   <Image
-                    src={profileData?.profileImage}
+                    src={localProfileData?.profileImage}
                     alt="Profile"
                     layout="fill"
                     objectFit="cover"
@@ -107,9 +114,9 @@ const ProfileDetails = () => {
               <input
                 type="text"
                 id="firstName"
-                value={profileData?.firstName}
+                value={localProfileData?.firstName}
                 onChange={(e) =>
-                  setProfileData((prev) => ({
+                  setLocalProfileData((prev) => ({
                     ...prev,
                     firstName: e.target.value,
                   }))
@@ -133,9 +140,9 @@ const ProfileDetails = () => {
               <input
                 type="text"
                 id="lastName"
-                value={profileData?.lastName}
+                value={localProfileData?.lastName}
                 onChange={(e) =>
-                  setProfileData((prev) => ({
+                  setLocalProfileData((prev) => ({
                     ...prev,
                     lastName: e.target.value,
                   }))
@@ -159,9 +166,9 @@ const ProfileDetails = () => {
               <input
                 type="email"
                 id="email"
-                value={profileData?.email}
+                value={localProfileData?.email}
                 onChange={(e) =>
-                  setProfileData((prev) => ({
+                  setLocalProfileData((prev) => ({
                     ...prev,
                     email: e.target.value,
                   }))
@@ -180,6 +187,7 @@ const ProfileDetails = () => {
           </form>
         </div>
       </div>
+      <ToastContainer position="top-right" />
     </div>
   );
 };

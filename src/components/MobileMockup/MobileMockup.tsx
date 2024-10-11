@@ -29,8 +29,9 @@ interface MobileMockupProps {
 
 const MobileMockup: React.FC<MobileMockupProps> = () => {
   const { savedLinks, profileData } = useAppContext();
+
   const getPlatformIcon = (platform: string) => {
-    switch (platform) {
+    switch (platform.toLowerCase()) {
       case "github":
         return <FaGithub />;
       case "linkedin":

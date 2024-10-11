@@ -1,11 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
 import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import MobileMockup from "../MobileMockup/MobileMockup";
 import { useAppContext } from "../AppContext/AppContext";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DraggableList = dynamic(() => import("../DraggableList/DraggableList"), {
   ssr: false,
 });
@@ -23,13 +25,20 @@ const Links = () => {
   const [nextId, setNextId] = useState(1);
   const [formError, setFormError] = useState<string | null>(null);
 
+  useEffect(() => {
+    if (savedLinks?.length > 0) {
+      setLinks(savedLinks);
+      setNextId(Math.max(...savedLinks.map((link) => link.id)) + 1);
+    }
+  }, [savedLinks]);
+
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
-      case "github":
+      case "GitHub":
         return <FaGithub />;
-      case "linkedin":
+      case "LinkedIn":
         return <FaLinkedin />;
-      case "youtube":
+      case "YouTube":
         return <FaYoutube />;
       default:
         return null;
@@ -38,11 +47,11 @@ const Links = () => {
 
   const getUrlPattern = (platform: string): RegExp => {
     switch (platform) {
-      case "github":
+      case "GitHub":
         return /^https:\/\/github\.com\/[a-zA-Z0-9-]+$/;
-      case "linkedin":
+      case "LinkedIn":
         return /^https:\/\/www\.linkedin\.com\/in\/[a-zA-Z0-9-]+$/;
-      case "youtube":
+      case "YouTube":
         return /^https:\/\/(?:www\.)?youtube\.com\/(?:@?[a-zA-Z0-9-]+|channel\/[a-zA-Z0-9-]+)$/;
       default:
         return /^https?:\/\/.+$/; // Basic URL pattern for other platforms
@@ -52,6 +61,7 @@ const Links = () => {
   const addNewLink = () => {
     if (links.length >= 3) {
       setFormError("You can only add up to 3 links.");
+      toast.error("ভাইজান আপনি শুধু মাত্র ৩ টি লিংক অ্যাড করতে পারবেন");
       return;
     }
     const newLink: ILinkData = {
@@ -100,15 +110,17 @@ const Links = () => {
 
     if (links.length === 0) {
       setFormError("Please add at least one link");
+      toast.error("ভাইজান,দয়া করে একটা লিংক অ্যাড করেন প্লিজ");
       return;
     }
 
     if (validateLinks()) {
       console.log("Form submitted successfully", links);
-      setSavedLinks(links); // Save the links to be displayed in the mockup
-      // Here you would typically send the data to your backend
+      setSavedLinks(links);
+      toast.success("আলহামদুলিল্লাহ,লিঙ্ক সফলভাবে সংরক্ষিত!");
     } else {
       setFormError("Please correct the errors before submitting");
+      toast.error("জমা দেওয়ার আগে ত্রুটি সংশোধন করুন");
     }
   };
 
@@ -155,9 +167,9 @@ const Links = () => {
                 className="mt-1 block w-full pl-10 pr-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm"
               >
                 <option value="">Select a platform</option>
-                <option value="github">GitHub</option>
-                <option value="linkedin">LinkedIn</option>
-                <option value="youtube">YouTube</option>
+                <option value="GitHub">GitHub</option>
+                <option value="LinkedIn">LinkedIn</option>
+                <option value="YouTube">YouTube</option>
               </select>
               {link.platform && (
                 <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -231,6 +243,7 @@ const Links = () => {
           </form>
         </div>
       </div>
+      <ToastContainer position="top-right" />
     </div>
   );
 };
