@@ -1,9 +1,14 @@
+"use client";
 import Image from "next/image";
 import React from "react";
 import { HiLink, HiUser, HiEye } from "react-icons/hi";
 import devlinksLogo from "../../images/bird_2.jpg";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
+  const pathname = usePathname();
+
   return (
     <div className="bg-[#943434] p-4 sm:p-6">
       <nav className="bg-white w-full max-w-full overflow-hidden">
@@ -25,14 +30,30 @@ const Navbar = () => {
 
           {/* Center buttons for desktop and tablet */}
           <div className="hidden sm:flex items-center space-x-2">
-            <button className="flex items-center gap-2 px-4 py-2 bg-[#F1ECFB] text-[#633BFE] rounded-md hover:bg-[#EFEDFB] transition-colors">
-              <HiLink className="text-lg" />
-              <span className="font-medium">Links</span>
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors">
-              <HiUser className="text-lg" />
-              <span className="font-medium">Profile Details</span>
-            </button>
+            <Link href="/" passHref>
+              <button
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
+                  pathname === "/"
+                    ? "bg-[#F1ECFB] text-[#633BFE]"
+                    : "bg-white text-gray-500"
+                } hover:bg-[#EFEDFB]`}
+              >
+                <HiLink className="text-lg" />
+                <span className="font-medium">Links</span>
+              </button>
+            </Link>
+            <Link href="/profile-details" passHref>
+              <button
+                className={`flex items-center gap-2 px-4 py-2 rounded-md transition-colors ${
+                  pathname === "/profile-details"
+                    ? "bg-blue-100 text-blue-600"
+                    : "bg-white text-gray-500"
+                } hover:bg-blue-200`}
+              >
+                <HiUser className="text-lg" />
+                <span className="font-medium">Profile Details</span>
+              </button>
+            </Link>
           </div>
 
           <button
@@ -46,12 +67,28 @@ const Navbar = () => {
 
         {/* Mobile buttons */}
         <div className="sm:hidden flex justify-center space-x-4 pb-4">
-          <button className="p-2 bg-[#F1ECFB] text-[#633BFE] rounded-md hover:bg-[#EFEDFB] transition-colors">
-            <HiLink className="text-lg" />
-          </button>
-          <button className="p-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 transition-colors">
-            <HiUser className="text-lg" />
-          </button>
+          <Link href="/" passHref>
+            <button
+              className={`p-2 rounded-md transition-colors ${
+                pathname === "/"
+                  ? "bg-[#F1ECFB] text-[#633BFE]"
+                  : "bg-white text-gray-500"
+              } hover:bg-[#EFEDFB]`}
+            >
+              <HiLink className="text-lg" />
+            </button>
+          </Link>
+          <Link href="/profile-details" passHref>
+            <button
+              className={`p-2 rounded-md transition-colors ${
+                pathname === "/profile-details"
+                  ? "bg-blue-100 text-blue-600"
+                  : "bg-white text-gray-500"
+              } hover:bg-blue-200`}
+            >
+              <HiUser className="text-lg" />
+            </button>
+          </Link>
         </div>
       </nav>
     </div>

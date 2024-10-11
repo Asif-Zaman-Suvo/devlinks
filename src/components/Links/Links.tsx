@@ -1,15 +1,11 @@
 "use client";
-import Image from "next/image";
+
 import React, { useState } from "react";
 import { DropResult } from "react-beautiful-dnd";
-import devlinksLogo from "../../images/bird_2.jpg";
-import {
-  FaChevronRight,
-  FaGithub,
-  FaLinkedin,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaYoutube } from "react-icons/fa";
 import dynamic from "next/dynamic";
+import MobileMockup from "../MobileMockup/MobileMockup";
+import { useAppContext } from "../AppContext/AppContext";
 const DraggableList = dynamic(() => import("../DraggableList/DraggableList"), {
   ssr: false,
 });
@@ -22,10 +18,10 @@ interface ILinkData {
 }
 
 const Links = () => {
-  const [links, setLinks] = useState<ILinkData[]>([]); // initial empty links
+  const { savedLinks, setSavedLinks, profileData } = useAppContext();
+  const [links, setLinks] = useState<ILinkData[]>([]);
   const [nextId, setNextId] = useState(1);
   const [formError, setFormError] = useState<string | null>(null);
-  const [savedLinks, setSavedLinks] = useState<ILinkData[]>([]);
 
   const getPlatformIcon = (platform: string) => {
     switch (platform) {
@@ -126,30 +122,7 @@ const Links = () => {
     items.splice(result.destination.index, 0, reorderedItem);
     setLinks(items);
   };
-  const getPlatformColor = (platform: string): string => {
-    switch (platform.toLowerCase()) {
-      case "github":
-        return "bg-gray-800";
-      case "youtube":
-        return "bg-red-600";
-      case "linkedin":
-        return "bg-blue-600";
-      default:
-        return "bg-gray-500";
-    }
-  };
-  const formatPlatformName = (platform: string): string => {
-    switch (platform.toLowerCase()) {
-      case "github":
-        return "GitHub";
-      case "youtube":
-        return "YouTube";
-      case "linkedin":
-        return "LinkedIn";
-      default:
-        return platform.charAt(0).toUpperCase() + platform.slice(1);
-    }
-  };
+
   const draggableItems = links.map((link) => ({
     id: link.id,
     content: (
@@ -225,36 +198,7 @@ const Links = () => {
     <div className="bg-[#943434] px-4 sm:px-6 pb-6">
       <div className="bg-[#943434] grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Mobile mockups */}
-        <div className="hidden md:block md:col-span-5 py-10 bg-white">
-          <div className="relative mx-auto border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
-            <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px]">
-              <Image src={devlinksLogo} width={272} height={572} alt="Mockup" />
-              <div className="p-4 space-y-4">
-                {savedLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`flex items-center justify-between p-3 rounded-lg text-white ${getPlatformColor(
-                      link.platform
-                    )}`}
-                  >
-                    <div className="flex items-center space-x-3">
-                      <span className="text-xl">
-                        {getPlatformIcon(link.platform)}
-                      </span>
-                      <span className="text-sm font-medium">
-                        {formatPlatformName(link.platform)}
-                      </span>
-                    </div>
-                    <FaChevronRight className="text-sm" />
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+        <MobileMockup profileData={profileData} savedLinks={savedLinks} />
         {/* Content section */}
         <div className="col-span-1 md:col-span-7 bg-white p-6">
           <h2 className="text-4xl font-bold mb-4">Customize your links</h2>
