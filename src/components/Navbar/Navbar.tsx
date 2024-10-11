@@ -56,13 +56,15 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <button
-            type="button"
-            className="text-[#633BFE] bg-white border-2 border-[#633BFE] focus:ring-4 focus:outline-none focus:ring-[#633BFE]/30 font-medium rounded-lg text-sm px-2 sm:px-4 py-2 text-center flex items-center gap-2"
-          >
-            <HiEye className="text-lg" />
-            <span className="hidden sm:inline">Preview</span>
-          </button>
+          <Link href="/preview-link" passHref>
+            <button
+              type="button"
+              className="text-[#633BFE] bg-white border-2 border-[#633BFE] focus:ring-4 focus:outline-none focus:ring-[#633BFE]/30 font-medium rounded-lg text-sm px-2 sm:px-4 py-2 text-center flex items-center gap-2"
+            >
+              <HiEye className="text-lg" />
+              <span className="hidden sm:inline">Preview</span>
+            </button>
+          </Link>
         </div>
 
         {/* Mobile buttons */}
