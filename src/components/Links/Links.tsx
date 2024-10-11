@@ -117,7 +117,7 @@ const Links = () => {
     if (validateLinks()) {
       console.log("Form submitted successfully", links);
       setSavedLinks(links);
-      toast.success("আলহামদুলিল্লাহ,লিঙ্ক সফলভাবে সংরক্ষিত!");
+      toast.success("আলহামদুলিল্লাহ,লিঙ্ক সফলভাবে সংরক্ষিত!!");
     } else {
       setFormError("Please correct the errors before submitting");
       toast.error("জমা দেওয়ার আগে ত্রুটি সংশোধন করুন");

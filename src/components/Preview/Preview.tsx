@@ -28,7 +28,7 @@ const Preview = () => {
     <div className="min-h-screen bg-purple-600 flex flex-col">
       {/* Header */}
       <header className="p-4 flex justify-between items-center">
-        <Link href="/">
+        <Link href="/add-links">
           <button className="px-4 py-2 bg-white text-purple-600 rounded-md hover:bg-gray-100 transition-colors">
             Back to Editor
           </button>
