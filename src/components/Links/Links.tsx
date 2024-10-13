@@ -208,7 +208,12 @@ const Links = () => {
     <div className="bg-[#FAFAFA] px-4 sm:px-6 pb-6">
       <div className="bg-[#FAFAFA] grid grid-cols-1 md:grid-cols-12 gap-6">
         {/* Mobile mockups */}
-        <MobileMockup profileData={profileData} savedLinks={savedLinks} />
+        <MobileMockup
+          profileData={profileData}
+          savedLinks={savedLinks}
+          isVisible={false} // Set to false to hide on mobile and tablet
+          className="hidden md:block" // Show only on desktop// Add class to show only on desktop
+        />
         {/* Content section */}
         <div className="col-span-1 md:col-span-7 bg-white p-6">
           <h2 className="text-4xl font-bold mb-4">Customize your links</h2>

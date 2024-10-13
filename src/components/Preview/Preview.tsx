@@ -46,7 +46,11 @@ const Preview = () => {
       {/* Main content */}
       <main className="flex-grow flex justify-center items-center p-4">
         <div className="w-full max-w-sm">
-          <MobileMockup profileData={profileData} savedLinks={savedLinks} />
+          <MobileMockup
+            isVisible={true}
+            profileData={profileData}
+            savedLinks={savedLinks}
+          />
         </div>
       </main>
       <ToastContainer position="top-right" />

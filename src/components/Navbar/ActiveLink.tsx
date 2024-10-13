@@ -23,7 +23,7 @@ const ActiveLink: React.FC<ActiveLinkProps> = ({
   return (
     <Link
       href={href}
-      className={`${className} ${isActive ? activeClassName : ""}`}
+      className={`${className} ${isActive ? activeClassName : ""}`.trim()} // Added .trim() to clean up extra spaces
     >
       {children}
     </Link>

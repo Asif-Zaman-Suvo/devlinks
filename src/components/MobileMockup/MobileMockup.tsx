@@ -25,9 +25,14 @@ interface ProfileData {
 interface MobileMockupProps {
   savedLinks: ILinkData[];
   profileData: ProfileData;
+  isVisible?: boolean;
+  className?: string;
 }
 
-const MobileMockup: React.FC<MobileMockupProps> = () => {
+const MobileMockup: React.FC<MobileMockupProps> = ({
+  isVisible = true,
+  className = "",
+}) => {
   const { savedLinks, profileData } = useAppContext();
 
   const getPlatformIcon = (platform: string) => {
@@ -57,7 +62,11 @@ const MobileMockup: React.FC<MobileMockupProps> = () => {
   };
 
   return (
-    <div className="hidden md:block md:col-span-5 py-10 bg-white">
+    <div
+      className={`${
+        isVisible ? "block" : "hidden"
+      } ${className} md:col-span-5 py-10 bg-white`}
+    >
       <div className="relative mx-auto border-[14px] border-gray-900 rounded-[2.5rem] h-[600px] w-[300px] shadow-xl">
         <div className="absolute top-0 w-[148px] h-[18px] bg-gray-900 left-1/2 transform -translate-x-1/2 rounded-b-[1rem] z-20"></div>
         <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white">

@@ -59,7 +59,12 @@ const ProfileDetails = () => {
   return (
     <div className="bg-[#FAFAFA] px-4 sm:px-6 pb-6">
       <div className="bg-[#FAFAFA] grid grid-cols-1 md:grid-cols-12 gap-6">
-        <MobileMockup savedLinks={savedLinks} profileData={profileData} />
+        <MobileMockup
+          savedLinks={savedLinks}
+          isVisible={false} // Set to false to hide on mobile and tablet
+          className="hidden md:block" // Show only on desktop
+          profileData={profileData}
+        />
         <div className="col-span-1 md:col-span-7 bg-white p-6 rounded-lg">
           <h2 className="text-4xl font-bold mb-4">Profile Details</h2>
           <p className="mb-10 text-gray-400">
