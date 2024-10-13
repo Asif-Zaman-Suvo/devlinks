@@ -1,7 +1,8 @@
 import ProfileDetails from "@/components/ProfileDetails/ProfileDetails";
+import withAuth from "@/hocs/withAuth";
 import React from "react";
 
-const ProfileDetailsPages = () => {
+const ProfileDetailsPages = async () => {
   return (
     <div>
       <ProfileDetails />
@@ -9,4 +10,4 @@ const ProfileDetailsPages = () => {
   );
 };
 
-export default ProfileDetailsPages;
+export default withAuth(ProfileDetailsPages);

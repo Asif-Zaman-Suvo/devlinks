@@ -1,7 +1,8 @@
 import Preview from "@/components/Preview/Preview";
+import withAuth from "@/hocs/withAuth";
 import React from "react";
 
-const PreviewLinkPage = () => {
+const PreviewLinkPage = async () => {
   return (
     <div>
       <Preview />
@@ -9,4 +10,4 @@ const PreviewLinkPage = () => {
   );
 };
 
-export default PreviewLinkPage;
+export default withAuth(PreviewLinkPage);

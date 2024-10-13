@@ -1,4 +1,5 @@
 import Links from "@/components/Links/Links";
+import withAuth from "@/hocs/withAuth";
 import React from "react";
 
 const AddLinkPage = async () => {
@@ -9,4 +10,4 @@ const AddLinkPage = async () => {
   );
 };
 
-export default AddLinkPage;
+export default withAuth(AddLinkPage);
